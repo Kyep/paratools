@@ -9,6 +9,7 @@ $use_blacklist = TRUE;
 
 $itemlist = array();
 $stringlist = array();
+$item_marray = array();
 
 $handle = fopen("../file_list_combined", "r");
 if ($handle) {
@@ -27,14 +28,14 @@ if ($handle) {
 		$handle2 = fopen("$line", "r");
 		if ($handle2) {
 			if ($debug) { print "OPENED: $line \n"; }
-			$item = $name = $rtech = $otech = $techstring = $ofile = $build_types = '';
+			$item = $name = $rtech = $otech = $techstring = $ofile = $build_types = $build_path = '';
 			$ofile = $line;
 			while (($line2 = fgets($handle2)) !== false) {
 				chop($line2);
-				if(preg_match('/^(\/[0-9a-zA-Z\/]+)/', $line2, $matches) && !preg_match('/^\/\//', $line2) && strpos($line2, '(') === FALSE ) {
-					if ($debug) { print "Found item definition: $matches[0] \n"; }
-					build_new_item($item, $name, $rtech, $otech, $build_types, $ofile);
-					$item = $name = $rtech = $otech = $techstring = $build_types = '';
+				if(preg_match('/^(\/[0-9a-zA-Z\-\_\/]+)/', $line2, $matches) && !preg_match('/^\/\//', $line2) && strpos($line2, '(') === FALSE ) {
+					store_item($item, $name, $rtech, $otech, $build_types, $ofile, $build_path);
+					if ($debug) { print "Found item definition: $matches[0] in $line \n"; }
+					$item = $name = $rtech = $otech = $techstring = $build_types = $build_path = '';
 					$item = $matches[1];
 					$name = $tech = $techstring = '';
 				} else if ($item != '' && $name == '' && preg_match('/name = "(.+)"/', $line2, $matches)) {
@@ -52,6 +53,14 @@ if ($handle) {
 					//print "Found tech origin: $matches[1] \n";
 					$otech = convert_to_techstring($matches[1], FALSE);
 					//print "OTECH is now $otech \n";
+				} else if ($item != '' && $build_path  == '' && preg_match('/build_path = (\/[0-9a-zA-Z\-\_\/]+)/', $line2, $matches)) {
+					if ($debug) { print "Found BPATH: $matches[1] \n"; }
+					if (strpos($matches[1], '/obj/machinery') === FALSE) {
+						$build_path = $matches[1];
+					} else {
+						if ($debug) { print "...BUT $matches[1] is a machine :( \n"; }
+						continue;
+					}
 				} else if ($item != '' && $build_types == '' && preg_match('/build_type = ([A-Za-z0-9]+)/', $line2, $matches)) {
 					if ($debug) { print "Found BUILD TYPE: '$matches[1]' \n"; }
 					if ($matches[1] == 'null') { continue; }
@@ -73,7 +82,7 @@ if ($handle) {
 					//print "NO MATCH: $line2 ";
 				}
 			}
-			build_new_item($item, $name, $rtech, $otech, $build_types, $ofile);
+			store_item($item, $name, $rtech, $otech, $build_types, $ofile, $build_path);
 			fclose($handle2);		
         	} else {
 			print "ERROR OPENING: ./$line \n";
@@ -83,6 +92,14 @@ if ($handle) {
 } else {
     print "ERROR OPENING: ./file_list";
 } 
+
+if ($debug) { print_r($item_marray); }
+//print "ASDASDASD\n";
+
+foreach ($item_marray as $k => $a) {
+	// build_new_item($item, $name, $rtech, $otech, $build_types, $ofile, $build_path);
+	build_new_item($k, $a);
+}
 
 sort($itemlist);
 foreach($itemlist as $thisitem) {
@@ -96,13 +113,57 @@ foreach($stringlist as $thisstring) {
 print "]";
 //print_r($stringlist);
 
-function build_new_item($t, $n, $r, $o, $s, $i) {
+function store_item($t,     $n,    $r,     $o,     $s,           $i,     $p) {
+	//store_item($item, $name, $rtech, $otech, $build_types, $ofile, $build_path);
+	global $item_marray;
+	global $debug;
+	if($p != '') {
+		$key = $p;
+	} else if ($t) {
+		$key = $t;
+	} else {
+		//print "ERROR: neither p nor t is set\n";
+		return;
+	}
+	if ($r == '' && $o == '') {
+		//print "ERROR: neither r nor o is set\n";
+		return;
+	}
+	if (isset($item_marray[$key])) { 
+		if ($debug) { print "UPDATING STORE $key. $r / $o / $p  \n"; }
+	} else {
+		if ($debug) { print "CREATING STORE $key. $r / $o / $p \n"; }
+		$item_marray[$key] = array(); 
+	}
+	if ($n != '') { $item_marray[$key]['name'] = $n; }
+	if ($r != '') { $item_marray[$key]['rtech'] = $r; }
+	if ($o != '') { $item_marray[$key]['otech'] = $o; }
+	if ($s != '') { $item_marray[$key]['build_types'] = $s; }
+	if ($i != '') { $item_marray[$key]['ofile'] = $i; }
+	//print_r($item_marray);
+	//exit;
+}
+
+//function build_new_item($t, $n, $r, $o, $s, $i, $p) {
+function build_new_item($t, $a) {
+	//$a['path'], $a['name'], $a['rtech'], $a['otech'], $a['build_types'], $a['ofile'], $a['build_path']);
 	global $itemlist;
 	global $stringlist;
 	global $debug;
+	global $item_marray;
 	//if ($t != '' && $n != '' && ($r != '' || $o != '')) {
+	//print "Trying to build: $t with";
+	//print_r($a);
+
+	//if(isset($a['path'])) { $t = $a['path']; } else { $t = null; }
+	if(isset($a['name'])) { $n = $a['name']; } else { $n = null; }
+	if(isset($a['otech'])) { $o = $a['otech']; } else { $o = '{}'; }
+	if(isset($a['rtech'])) { $r = $a['rtech']; } else { $r = $o; }
+	if(isset($a['build_types'])) { $s = $a['build_types']; } else { $s = '?'; }
+	if(isset($a['ofile'])) { $i = $a['ofile']; } else { $i = null; }
+	if(isset($a['build_path'])) { $p = $a['build_path']; } else { $p = null; }
 	if ($t != '' && $n != '' && $o != '') {
-		if ($r === '') { $r = $o; }
+		//if ($r === '') { $r = $o; }
 		if ($o === '') { $o = '{}'; }
 		if ($s === '') { $s = $i; }
 		$itemlist[] = "'$n' ($t) has $r/$o";
@@ -114,7 +175,13 @@ function build_new_item($t, $n, $r, $o, $s, $i) {
 	} else {
 		//print "X: $t $n $r $o \n";
 	}
+	//print_r($stringlist);
+	//exit;
 }
+
+
+
+
 
 function convert_to_techstring($tstr, $islist) {	
 	//print "$tstr \n";
