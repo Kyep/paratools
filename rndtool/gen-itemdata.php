@@ -7,8 +7,6 @@ $file_blacklist = array (
 );
 $use_blacklist = FALSE;
 
-$item_json = '';
-
 $itemlist = array();
 $stringlist = array();
 
@@ -101,9 +99,11 @@ print "]";
 function build_new_item($t, $n, $r, $o, $s, $i) {
 	global $itemlist;
 	global $stringlist;
-	if ($t != '' && $n != '' && ($r != '' || $o != '')) {
-		if ($r === '') { $r = $o; }
-		if ($o === '') { $o = $r; }
+	global $debug;
+	//if ($t != '' && $n != '' && ($r != '' || $o != '')) {
+	if ($t != '' && $n != '' && $o != '') {
+		if ($r === '') { $r = '{}'; }
+		if ($o === '') { $o = '{}'; }
 		if ($s === '') { $s = $i; }
 		$itemlist[] = "'$n' ($t) has $r/$o";
 		$newitem = "{'name':'$n', 'buildType':'$s', 'numCost':0, 'reqTech':$r, 'originTech':$o }";
