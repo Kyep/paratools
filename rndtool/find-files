@@ -1,0 +1,5 @@
+grep -rl origin_tech * > file_list_combined
+
+grep -rl req_tech * >> file_list_combined
+
+cat file_list_combined | sort | uniq > file_list_combined
