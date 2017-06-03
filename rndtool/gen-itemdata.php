@@ -37,22 +37,22 @@ if ($handle) {
 					$item = $name = $rtech = $otech = $techstring = $build_types = '';
 					$item = $matches[1];
 					$name = $tech = $techstring = '';
-				} else if ($item != '' && preg_match('/name = "(.+)"/', $line2, $matches)) {
+				} else if ($item != '' && $name == '' && preg_match('/name = "(.+)"/', $line2, $matches)) {
 					//print "Found item name: $matches[1] \n";
 					$name = str_replace("'", "", $matches[1]);
 					$name = str_replace('\improper ', '', $name);
-				} else if ($item != '' && preg_match('/req_tech = list\((.+)\)/', $line2, $matches)) {
+				} else if ($item != '' && $rtech == '' && preg_match('/req_tech = list\((.+)\)/', $line2, $matches)) {
 					//print "Found req tech: '$matches[1]' \n";
 					if($matches[1] != '') {
 						//print "Converting...\n";
 						$rtech = convert_to_techstring($matches[1], TRUE);
 						//print "RTECH is now $rtech \n";
 					}
-				} else if ($item != '' && preg_match('/origin_tech = "(.+)"/', $line2, $matches)) {
+				} else if ($item != '' && $otech  == '' && preg_match('/origin_tech = "(.+)"/', $line2, $matches)) {
 					//print "Found tech origin: $matches[1] \n";
 					$otech = convert_to_techstring($matches[1], FALSE);
 					//print "OTECH is now $otech \n";
-				} else if ($item != '' && preg_match('/build_type = ([A-Za-z0-9]+)/', $line2, $matches)) {
+				} else if ($item != '' && $build_types == '' && preg_match('/build_type = ([A-Za-z0-9]+)/', $line2, $matches)) {
 					if ($debug) { print "Found BUILD TYPE: '$matches[1]' \n"; }
 					if ($matches[1] == 'null') { continue; }
 					$build_type = array();
