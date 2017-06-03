@@ -2,10 +2,10 @@
 
 $debug = FALSE;
 $file_blacklist = array (
+'.dmm',
 'code/game/objects/items/weapons/cards_ids.dm',
-'code/game/objects/items/stacks/sheets/'
 );
-$use_blacklist = FALSE;
+$use_blacklist = TRUE;
 
 $itemlist = array();
 $stringlist = array();
@@ -102,7 +102,7 @@ function build_new_item($t, $n, $r, $o, $s, $i) {
 	global $debug;
 	//if ($t != '' && $n != '' && ($r != '' || $o != '')) {
 	if ($t != '' && $n != '' && $o != '') {
-		if ($r === '') { $r = '{}'; }
+		if ($r === '') { $r = $o; }
 		if ($o === '') { $o = '{}'; }
 		if ($s === '') { $s = $i; }
 		$itemlist[] = "'$n' ($t) has $r/$o";
