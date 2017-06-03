@@ -195,7 +195,8 @@ function convert_to_techstring($tstr, $islist) {
 			"combat" => "c",
 			"magnets" => "em",
 			"programming" => "dt",
-			"syndicate" => "i"
+			"syndicate" => "i",
+			"abductor" => "ab"
 	);
 	$techarr = array();
 	if($islist) {

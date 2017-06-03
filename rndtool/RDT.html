@@ -357,10 +357,10 @@ rndData.sort( function( a, b ) {
 		b = b.numCost;
 		return a < b ? -1 : a > b ? 1 : 0;
 	});
-levelsIntern = ["bio","bs","c","dt","e","em","i","m","pl","pow"];
+levelsIntern = ["bio","bs","c","dt","e","em","i","m","pl","pow","ab"];
 levelsDict = {"bio":0,"bs":1,"c":2,"dt":3,"e":4,"em":5,"i":6,"m":7,"pl":8,"pow":9};
-levelsDesc = ["Biotech","Bluespace","Combat","Data","Engineering","Magnets","Illegal","Materials","Plasma","Power"];
-levels = [1,1,1,1,1,1,1,1,1,1];
+levelsDesc = ["Biotech","Bluespace","Combat","Data","Engineering","Magnets","Illegal","Materials","Plasma","Power","Abductor"];
+levels = [1,1,1,1,1,1,1,1,1,1,1];
 filterVal = -1;
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
@@ -436,6 +436,7 @@ Levels:<br>
 <tr><td style="text-align:right">Magnets:     </td><td><input type="number" id="lvl5" onchange="changeVal(5)" value="1" /></td><td><a href="#" onclick="filter(5)">Filter</a></td>
 <tr><td style="text-align:right">Data:        </td><td><input type="number" id="lvl3" onchange="changeVal(3)" value="1" /></td><td><a href="#" onclick="filter(3)">Filter</a></td>
 <tr><td style="text-align:right">Illegal:     </td><td><input type="number" id="lvl6" onchange="changeVal(6)" value="1" /></td><td><a href="#" onclick="filter(6)">Filter</a></td>
+<tr><td style="text-align:right">Abductor:   </td><td><input type="number" id="lvl10" onchange="changeVal(10)" value="1" /></td><td><a href="#" onclick="filter(10)">Filter</a></td>
 </table>
 <a href="#" onclick="filter(-1)">Reset Filter</a><br>
 <span id="upgrades">
