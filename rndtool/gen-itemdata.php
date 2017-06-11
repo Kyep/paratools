@@ -44,8 +44,11 @@ $xanlist = array(
 'ghost chili',
 'lazarus injector',
 'chain of command',
+'killer-tomato',
+'riot shotgun',
 'combat shotgun',
 'ambrosia gaia branch',
+'sentience potion',
 'charged slime core',
 'glowcap cluster',
 'mining jetpack',
@@ -207,7 +210,7 @@ function build_new_item($t, $a) {
 	if ($t != '' && $n != '' && $o != '') {
 		//if ($r === '') { $r = $o; }
 		if ($o === '') { $o = '{}'; }
-		if ($s === '') { $s = $i; }
+		//if ($s === '') { $s = $i; } // if no build location, use filepath
 		$itemlist[] = "'$n' ($t) has $r/$o";
 		if(in_array($n, $xanlist)) {
 			$newitem = "{'name':'$n', 'buildType':'$s', 'numCost':0, 'reqTech':$r, 'originTech':$o, 'xanlist':1 }";
