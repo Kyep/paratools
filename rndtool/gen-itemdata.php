@@ -6,12 +6,57 @@ $file_blacklist = array (
 'code/game/objects/items/weapons/cards_ids.dm',
 );
 $use_blacklist = TRUE;
+$xanlist = array(
+'Basic Capacitor',
+'Basic Matter Bin',
+'Basic Micro-Laser',
+'High-Capacity Power Cell',
+'Science Goggles',
+'welding tool',
+'Advanced Capacitor',
+'Advanced Scanning Module',
+'Mass-Spectrometer',
+'Health Scanner HUD',
+'Micro Manipulator',
+'Advanced Reagent Scanner',
+'advanced hard disk drive',
+'Tracking Beacon',
+'global positioning system',
+'Holographic Sign Projector',
+'Mining Drill',
+'cluster hard disk drive',
+'Machine Board (SUPERPACMAN-type Generator)',
+'Console Board (Telepad Control Console)',
+'Advanced Matter Bin',
+'Machine Board (Quantum Pad Board)',
+'toolbox',
+'Machine Board (Teleportation Hub)',
+'Security HUD',
+'Large Grenade',
+'Exosuit Board ("Gygax" Weapons & Targeting Control module)',
+'Floral Somatoray',
+'brain',
+'Reviver implant',
+'Bluespace Crystal',
+'AI Module (Purge)',
+'Diamond Mining Drill',
+'minebot AI upgrade',
+'ghost chili',
+'lazarus injector',
+'chain of command',
+'combat shotgun',
+'ambrosia gaia branch',
+'charged slime core',
+'glowcap cluster',
+'mining jetpack',
+'machine prototype'
+);
 
 $itemlist = array();
 $stringlist = array();
 $item_marray = array();
 
-$handle = fopen("../file_list_combined", "r");
+$handle = fopen("file_list_combined", "r");
 if ($handle) {
 	while (($line = fgets($handle)) !== false) {
 		$line = chop($line);
@@ -144,22 +189,19 @@ function store_item($t,     $n,    $r,     $o,     $s,           $i,     $p) {
 	//exit;
 }
 
-//function build_new_item($t, $n, $r, $o, $s, $i, $p) {
 function build_new_item($t, $a) {
-	//$a['path'], $a['name'], $a['rtech'], $a['otech'], $a['build_types'], $a['ofile'], $a['build_path']);
 	global $itemlist;
 	global $stringlist;
 	global $debug;
 	global $item_marray;
-	//if ($t != '' && $n != '' && ($r != '' || $o != '')) {
+	global $xanlist;
 	//print "Trying to build: $t with";
 	//print_r($a);
 
-	//if(isset($a['path'])) { $t = $a['path']; } else { $t = null; }
 	if(isset($a['name'])) { $n = $a['name']; } else { $n = null; }
 	if(isset($a['otech'])) { $o = $a['otech']; } else { $o = '{}'; }
 	if(isset($a['rtech'])) { $r = $a['rtech']; } else { $r = $o; }
-	if(isset($a['build_types'])) { $s = $a['build_types']; } else { $s = '?'; }
+	if(isset($a['build_types'])) { $s = $a['build_types']; } else { $s = ''; }
 	if(isset($a['ofile'])) { $i = $a['ofile']; } else { $i = null; }
 	if(isset($a['build_path'])) { $p = $a['build_path']; } else { $p = null; }
 	if ($t != '' && $n != '' && $o != '') {
@@ -167,7 +209,11 @@ function build_new_item($t, $a) {
 		if ($o === '') { $o = '{}'; }
 		if ($s === '') { $s = $i; }
 		$itemlist[] = "'$n' ($t) has $r/$o";
-		$newitem = "{'name':'$n', 'buildType':'$s', 'numCost':0, 'reqTech':$r, 'originTech':$o }";
+		if(in_array($n, $xanlist)) {
+			$newitem = "{'name':'$n', 'buildType':'$s', 'numCost':0, 'reqTech':$r, 'originTech':$o, 'xanlist':1 }";
+		} else {
+			$newitem = "{'name':'$n', 'buildType':'$s', 'numCost':0, 'reqTech':$r, 'originTech':$o, 'xanlist':0 }";
+		}
 		$stringlist[] = $newitem;
 		if ($debug) { print "BUILDING ITEM FOR $t: $newitem \n"; }
 		//{'name':'Advanced Laser Scalpel','buildType':'PROTOLATHE','numCost':37500,'reqTech':{'m':6,'e':0,'pl':0,'pow':0,'bs':0,'bio':4,'c':0,'em':5,'dt':0,'i':0},'originTech':{'m':1,'e':0,'pl':0,'pow':0,'bs':0,'bio':1,'c':0,'em':0,'dt':0,'i':0}},
@@ -175,8 +221,6 @@ function build_new_item($t, $a) {
 	} else {
 		//print "X: $t $n $r $o \n";
 	}
-	//print_r($stringlist);
-	//exit;
 }
 
 
@@ -242,7 +286,7 @@ function convert_to_techstring($tstr, $islist) {
 		}
 		$p .= "'$k':'$v'";
 		$techstring .= $p;
-	//	print "Adding '$p' to $techstring \n";
+		//print "Adding '$p' to $techstring \n";
 	}
 	$techstring .= '}';
 	return $techstring;
