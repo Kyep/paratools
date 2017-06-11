@@ -1,5 +1,6 @@
 <?php
 
+//$debug = TRUE;
 $debug = FALSE;
 $file_blacklist = array (
 '.dmm',
@@ -33,11 +34,11 @@ $xanlist = array(
 'Machine Board (Teleportation Hub)',
 'Security HUD',
 'Large Grenade',
-'Exosuit Board ("Gygax" Weapons & Targeting Control module)',
+'Exosuit Board (\"Gygax\" Weapons & Targeting Control module)',
 'Floral Somatoray',
 'brain',
 'Reviver implant',
-'Bluespace Crystal',
+'bluespace crystal',
 'AI Module (Purge)',
 'Diamond Mining Drill',
 'minebot AI upgrade',
@@ -87,7 +88,7 @@ if ($handle) {
 					$item = $matches[1];
 					$name = $tech = $techstring = '';
 				} else if ($item != '' && $name == '' && preg_match('/name = "(.+)"/', $line2, $matches)) {
-					//print "Found item name: $matches[1] \n";
+					if ($debug) { print "Found item name: $matches[1] \n"; }
 					$name = str_replace("'", "", $matches[1]);
 					$name = str_replace('\improper ', '', $name);
 				} else if ($item != '' && $rtech == '' && preg_match('/req_tech = list\((.+)\)/', $line2, $matches)) {
