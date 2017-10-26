@@ -1,0 +1,5 @@
+grep -rnw '/directory' -e 'origin_tech'
+
+ grep -rl origin_tech Oracle/* > oracle_file_list_combined
+ grep -rl req_tech Oracle/* >> oracle_file_list_combined
+ cat oracle_file_list_combined | sort | uniq > oracle_file_list_combined
