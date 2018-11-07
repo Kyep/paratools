@@ -60,7 +60,7 @@ $itemlist = array();
 $stringlist = array();
 $item_marray = array();
 
-$handle = fopen("file_list_combined", "r");
+$handle = fopen("file_list_combined_sorted", "r");
 if ($handle) {
 	while (($line = fgets($handle)) !== false) {
 		$line = chop($line);
