@@ -1,0 +1,6 @@
+./find-files
+php gen-itemdata.php > rndData.js
+update date in RDT.html
+download modified RDT.html and rndData.js to local github
+check in changes
+verify that they show up on: https://kyep.github.io/paratools/rndtool/RDT.html
