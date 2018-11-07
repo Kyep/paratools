@@ -87,7 +87,7 @@ if ($handle) {
 					$item = $name = $rtech = $otech = $techstring = $build_types = $build_path = '';
 					$item = $matches[1];
 					$name = $tech = $techstring = '';
-				} else if ($item != '' && $name == '' && preg_match('/name = "(.+)"/', $line2, $matches)) {
+				} else if ($item != '' && $name == '' && preg_match('/\tname = "(.+)"/', $line2, $matches)) {
 					if ($debug) { print "Found item name: $matches[1] \n"; }
 					$name = str_replace("'", "", $matches[1]);
 					$name = str_replace('\improper ', '', $name);
