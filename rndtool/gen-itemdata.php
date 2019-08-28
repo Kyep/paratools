@@ -244,7 +244,8 @@ function convert_to_techstring($tstr, $islist) {
 			"magnets" => "em",
 			"programming" => "dt",
 			"syndicate" => "i",
-			"abductor" => "ab"
+			"abductor" => "ab",
+			"toxins" => "tox"
 	);
 	$techarr = array();
 	if($islist) {

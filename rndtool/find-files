@@ -2,6 +2,6 @@
 
 rm file_list_combined
 rm file_list_combined_sorted
-grep -rl origin_tech Paradise/* > file_list_combined
-grep -rl req_tech Paradise/* >> file_list_combined
+grep -rl origin_tech ~/github/Paradise/* > file_list_combined
+grep -rl req_tech ~/github/Paradise/* >> file_list_combined
 cat file_list_combined | sort | uniq > file_list_combined_sorted
