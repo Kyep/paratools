@@ -1,5 +1,14 @@
 <?php
 
+/*
+TODO:
+- eng: list machine prototype 5->7
+- bluespace: polycrystal from mining 5->7
+- biotech: sentience/transfer potions 5->7
+- magnets: lazarus injectors 5->7
+
+*/
+
 //$debug = TRUE;
 $debug = FALSE;
 $file_blacklist = array (
@@ -47,13 +56,16 @@ $xanlist = array(
 'chain of command',
 'killer-tomato',
 'riot shotgun',
-'combat shotgun',
 'ambrosia gaia branch',
 'sentience potion',
 'charged slime core',
 'glowcap cluster',
 'mining jetpack',
-'machine prototype'
+'machine prototype',
+'uranium', // mat 5->6
+'diamond', // mat 6->7
+'Exosuit Weapon (P-X Tesla Cannon)', // combat 6->7, chain for 5->6
+'Lazarus Injector'
 );
 
 $itemlist = array();
