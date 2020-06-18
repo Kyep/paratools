@@ -369,7 +369,6 @@ function doDisplay()
 {
 
 	var show_illegal = document.getElementById("show_illegal").checked;
-	var show_abductor = document.getElementById("show_abductor").checked;
 
 	upgradesHTML = '';
 	var upgrades1 = '';
@@ -391,7 +390,7 @@ function doDisplay()
 			}
 			
 			// Abductor
-			if (!show_abductor && rndData[i].originTech["ab"] > 0) {
+			if (rndData[i].originTech["ab"] > 0) {
 				valid = 0;
 			}
 
@@ -478,16 +477,14 @@ function filter(i) {
 <tr><td style="text-align:center;font-weight:bold">Tech</td><td style="text-align:center;font-weight:bold">Current</td><td style="text-align:center;font-weight:bold">Search</td><td style="text-align:left;font-weight:bold">5 -> 7 Upgrades</td></tr>
 <tr><td style="text-align:right">Materials:   </td><td><input type="number" id="lvl7" onchange="changeVal(7)" value="1" /></td><td><a href="#" onclick="filter(7)">Filter</a></td><td>Uranium, Diamond (mining)</td></tr>
 <tr><td style="text-align:right">Engineering: </td><td><input type="number" id="lvl4" onchange="changeVal(4)" value="1" /></td><td><a href="#" onclick="filter(4)">Filter</a></td><td>2x Machine Prototype (cargo)</td></tr>
-<tr><td style="text-align:right">Plasma:      </td><td><input type="number" id="lvl8" onchange="changeVal(8)" value="1" /></td><td><a href="#" onclick="filter(8)">Filter</a></td><td>Glowcap / Charged Slime Core (botany/xenobio), Phazon Torso</td></tr>
+<tr><td style="text-align:right">Plasma:      </td><td><input type="number" id="lvl8" onchange="changeVal(8)" value="1" /></td><td><a href="#" onclick="filter(8)">Filter</a></td><td>Phazon Torso, Glowcap / Charged Slime Core (botany/xenobio)</td></tr>
 <tr><td style="text-align:right">Power:       </td><td><input type="number" id="lvl9" onchange="changeVal(9)" value="1" /></td><td><a href="#" onclick="filter(9)">Filter</a></td><td>Glowcap / Charged Slime Core (botany/xenobio)</td></tr>
 <tr><td style="text-align:right">Bluespace:   </td><td><input type="number" id="lvl1" onchange="changeVal(1)" value="1" /></td><td><a href="#" onclick="filter(1)">Filter</a></td><td>2x Bluespace Polycrystal (mining)</td></tr>
 <tr><td style="text-align:right">Biotech:     </td><td><input type="number" id="lvl0" onchange="changeVal(0)" value="1" /></td><td><a href="#" onclick="filter(0)">Filter</a></td><td>Sentience / Consciousness Transfer potions (xenobio)</td></tr>
 <tr><td style="text-align:right">Combat:      </td><td><input type="number" id="lvl2" onchange="changeVal(2)" value="1" /></td><td><a href="#" onclick="filter(2)">Filter</a></td><td>Chain of Command, P-X Tesla Cannon (Captain, robotics)</td></tr>
 <tr><td style="text-align:right">Magnets:     </td><td><input type="number" id="lvl5" onchange="changeVal(5)" value="1" /></td><td><a href="#" onclick="filter(5)">Filter</a></td><td>2x Lazarus Injector (mining)</td></tr>
 <tr><td style="text-align:right">Data:        </td><td><input type="number" id="lvl3" onchange="changeVal(3)" value="1" /></td><td><a href="#" onclick="filter(3)">Filter</a></td><td>Minebot AI Upgrade (mining)</td></tr>
-<tr><td style="text-align:right">Toxins:        </td><td><input type="number" id="lvl10" onchange="changeVal(10)" value="1" /></td><td><a href="#" onclick="filter(10)">Filter</a></td><td></td></tr>
 <tr><td style="text-align:right">Illegal:     </td><td><input type="number" id="lvl6" onchange="changeVal(6)" value="1" /></td><td><a href="#" onclick="filter(6)">Filter</a></td><td><input type="checkbox" id="show_illegal" name="show_illegal" title="Show" onclick="doDisplay();" style="width: 10px">Shown</td></tr>
-<tr><td style="text-align:right">Abductor:   </td><td><input type="number" id="lvl10" onchange="changeVal(10)" value="1" /></td><td><a href="#" onclick="filter(10)">Filter</a></td><td><input type="checkbox" id="show_abductor" name="show_abductor" title="Show" onclick="doDisplay();" style="width: 10px">Shown</td></tr>
 </table>
 <a href="#" onclick="filter(-1)">Reset Filter</a><br>
 <span id="upgrades">
@@ -505,7 +502,7 @@ function filter(i) {
 <UL>
 <LI>Original code based on the work of monster860</LI>
 <LI>Last item tech level data update: <B><U><font color='red'>2020/June/17th</font></U></B> (based on then-current tech level data in Paradise Github)</LI>
-<LI>Last functionality/feature update: 2020/June/17th, changes: added the "How To Use This Tool" section above, updated links, phazon torso and other mech components are now included in item list.</LI>
+<LI>Last functionality/feature update: 2020/June/17th, changes: added the "How To Use This Tool" section above, updated links, phazon torso and other mech components are now included in item list, removed support for toxins/abductor items because R&D cannot produce any such items that will raise levels of those techs.</LI>
 <LI>The 'Recommended' items are based on <a href="https://www.paradisestation.org/forum/topic/16834-rd-superguide/" target="_blank">John's Guide</a> and <a href="https://www.paradisestation.org/forum/topic/14750-meexs-guide-to-rd-in-10-minutes-or-less/" target="_blank">Meex's Guide</a></LI>
 </UL>
 </body>
