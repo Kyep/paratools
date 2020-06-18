@@ -65,7 +65,8 @@ $xanlist = array(
 'uranium', // mat 5->6
 'diamond', // mat 6->7
 'Exosuit Weapon (P-X Tesla Cannon)', // combat 6->7, chain for 5->6
-'Lazarus Injector'
+'Lazarus Injector',
+'Phazon Torso'
 );
 
 $itemlist = array();
