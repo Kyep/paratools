@@ -103,6 +103,10 @@ if ($handle) {
 					if ($debug) { print "Found item name: $matches[1] \n"; }
 					$name = str_replace("'", "", $matches[1]);
 					$name = str_replace('\improper ', '', $name);
+				} else if ($item != '' && $name == '' && preg_match('/\tname="(.+)"/', $line2, $matches)) {
+					if ($debug) { print "Found item name (no spaces): $matches[1] \n"; }
+					$name = str_replace("'", "", $matches[1]);
+					$name = str_replace('\improper ', '', $name);
 				} else if ($item != '' && $rtech == '' && preg_match('/req_tech = list\((.+)\)/', $line2, $matches)) {
 					//print "Found req tech: '$matches[1]' \n";
 					if($matches[1] != '') {
@@ -234,8 +238,8 @@ function build_new_item($t, $a) {
 		if ($debug) { print "BUILDING ITEM FOR $t: $newitem \n"; }
 		//{'name':'Advanced Laser Scalpel','buildType':'PROTOLATHE','numCost':37500,'reqTech':{'m':6,'e':0,'pl':0,'pow':0,'bs':0,'bio':4,'c':0,'em':5,'dt':0,'i':0},'originTech':{'m':1,'e':0,'pl':0,'pow':0,'bs':0,'bio':1,'c':0,'em':0,'dt':0,'i':0}},
 		//print "{'name':'" + $n + "',buildType':'MISC','numCost':0,'reqTech':{" + 
-	} else {
-		//print "X: $t $n $r $o \n";
+	} else if ($debug) {
+		print "FAILED ITEM: $t || $n || $r || $o \n";
 	}
 }
 
